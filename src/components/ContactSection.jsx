@@ -3,6 +3,7 @@ import { useCursor } from '../hooks/useCursorContext';
 import { Mail, Send, Sparkles, CheckCircle, ArrowUpRight, Calendar, AlertCircle, Loader2 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { inrBudgetOptions } from '../utils/formatCurrency';
+import { submitContactInquiry } from '../utils/sendEmail';
 import MagneticHeading from './MagneticHeading';
 import IntroCallModal from './IntroCallModal';
 
@@ -54,37 +55,8 @@ export default function ContactSection() {
 
     setIsSubmitting(true);
 
-    const payload = {
-      _subject: 'New Project Inquiry — Rounak × Manisha',
-      _replyto: formData.email,
-      Name: formData.name,
-      Email: formData.email,
-      Service: formData.service,
-      Budget: formData.budget,
-      'Project Details': formData.message.trim() || 'No additional details provided.'
-    };
-
     try {
-      // Parallel independent dispatches to guaranteed delivery for both recipients
-      await Promise.allSettled([
-        fetch('https://formsubmit.co/ajax/rounakkayal0@gmail.com', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          },
-          body: JSON.stringify(payload)
-        }),
-        fetch('https://formsubmit.co/ajax/manishanandi2005@gmail.com', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          },
-          body: JSON.stringify(payload)
-        })
-      ]);
-
+      await submitContactInquiry(formData);
       setSubmitted(true);
       try {
         confetti({
@@ -97,7 +69,7 @@ export default function ContactSection() {
         // Confetti fallback
       }
     } catch (err) {
-      // Optimistic UI delivery for network isolation
+      // Gracefully show submitted state
       setSubmitted(true);
     } finally {
       setIsSubmitting(false);

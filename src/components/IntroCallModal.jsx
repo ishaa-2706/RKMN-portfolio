@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import { X, Calendar, Clock, Sparkles, CheckCircle, AlertCircle, Loader2, Send } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { useCursor } from '../hooks/useCursorContext';
+import { submitDiscoveryCall } from '../utils/sendEmail';
 
 export default function IntroCallModal({ isOpen, onClose }) {
   const { setCursor, resetCursor } = useCursor();
@@ -98,38 +99,8 @@ export default function IntroCallModal({ isOpen, onClose }) {
 
     setIsSubmitting(true);
 
-    const payload = {
-      _subject: 'New 30-Min Intro Call Request — Rounak × Manisha',
-      _replyto: formData.email,
-      Name: formData.name,
-      Email: formData.email,
-      Phone: formData.phone.trim() || 'Not provided',
-      'Preferred Date': formData.preferredDate,
-      'Preferred Time': formData.preferredTime,
-      'Project / Discussion Topic': formData.topic,
-      'Additional Notes': formData.notes.trim() || 'No additional notes provided.'
-    };
-
     try {
-      await Promise.allSettled([
-        fetch('https://formsubmit.co/ajax/rounakkayal0@gmail.com', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json'
-          },
-          body: JSON.stringify(payload)
-        }),
-        fetch('https://formsubmit.co/ajax/manishanandi2005@gmail.com', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json'
-          },
-          body: JSON.stringify(payload)
-        })
-      ]);
-
+      await submitDiscoveryCall(formData);
       setSubmitted(true);
       try {
         confetti({
