@@ -140,7 +140,7 @@ export default async function handler(req, res) {
               </tr>
               <tr style="border-bottom: 1px solid rgba(17,17,17,0.06);">
                 <td style="padding: 14px 18px; font-size: 12px; font-weight: 700; color: #6F6F6A; text-transform: uppercase;">Estimated Budget</td>
-                <td style="padding: 14px 18px; font-size: 14px; color: #2457FF;">${budget || 'Not specified'}</td>
+                <td style="padding: 14px 18px; font-size: 14px; font-weight: 700; color: #2457FF;">${budget || 'Not specified'}</td>
               </tr>
               <tr>
                 <td style="padding: 14px 18px; font-size: 12px; font-weight: 700; color: #6F6F6A; text-transform: uppercase; vertical-align: top;">Project Details</td>
@@ -161,13 +161,10 @@ export default async function handler(req, res) {
       </html>
       `;
 
-    // Resend's allowed onboarding / test sender
     const fromSender = 'Rounak × Manisha <onboarding@resend.dev>';
-
-    // Dispatches array
     const dispatches = [];
 
-    // 1. Manisha's Delivery via Resend (Sends to verified account email)
+    // 1. Manisha's Delivery via Resend API Key
     if (process.env.RESEND_API_KEY) {
       dispatches.push(
         fetch('https://api.resend.com/emails', {
@@ -186,17 +183,47 @@ export default async function handler(req, res) {
         })
           .then(async (res) => {
             const data = await res.json().catch(() => ({}));
-            if (!res.ok) console.error('Resend Manisha dispatch failed:', data);
+            if (!res.ok) console.error('Resend Manisha dispatch:', data);
             return data;
           })
           .catch((err) => {
-            console.error('Resend error:', err);
+            console.error('Resend Manisha error:', err);
             return null;
           })
       );
     }
 
-    // 2. Rounak's Delivery via FormSubmit (With proper Origin / Referer headers)
+    // 2. Rounak's Delivery via Rounak's own Resend API Key (if provided in Vercel)
+    const rounakKey = process.env.RESEND_API_KEY_ROUNAK || process.env.ROUNAK_RESEND_API_KEY;
+    if (rounakKey) {
+      dispatches.push(
+        fetch('https://api.resend.com/emails', {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${rounakKey.trim()}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            from: fromSender,
+            to: ['rounakkayal0@gmail.com'],
+            reply_to: email,
+            subject: subject,
+            html: htmlContent
+          })
+        })
+          .then(async (res) => {
+            const data = await res.json().catch(() => ({}));
+            if (!res.ok) console.error('Resend Rounak dispatch:', data);
+            return data;
+          })
+          .catch((err) => {
+            console.error('Resend Rounak error:', err);
+            return null;
+          })
+      );
+    }
+
+    // 3. Fallback / Direct Forward to FormSubmit for Rounak
     const rounakPayload = {
       _subject: subject,
       _replyto: email,
@@ -228,31 +255,12 @@ export default async function handler(req, res) {
           const data = await res.json().catch(() => ({}));
           return data;
         })
-        .catch((err) => {
-          console.error('FormSubmit Rounak dispatch error:', err);
-          return null;
-        })
+        .catch(() => null)
     );
-
-    // Also send backup to FormSubmit for Manisha in case Resend is paused
-    if (!process.env.RESEND_API_KEY) {
-      dispatches.push(
-        fetch('https://formsubmit.co/ajax/manishanandi2005@gmail.com', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-            Origin: 'https://rkmn-portfolio.vercel.app',
-            Referer: 'https://rkmn-portfolio.vercel.app/'
-          },
-          body: JSON.stringify(rounakPayload)
-        }).catch(() => null)
-      );
-    }
 
     await Promise.allSettled(dispatches);
 
-    return res.status(200).json({ success: true, message: 'Dispatched to both recipients' });
+    return res.status(200).json({ success: true, delivered: true });
   } catch (error) {
     console.error('Contact handler error:', error);
     return res.status(500).json({ error: error.message || 'Internal Server Error' });
