@@ -36,7 +36,6 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Name and Email are required fields.' });
     }
 
-    const recipients = ['rounakkayal0@gmail.com', 'manishanandi2005@gmail.com'];
     const isCall = formType === 'call' || !!preferredDate;
     const subject = isCall
       ? `📅 30-Min Discovery Call Booking: ${name}`
@@ -52,24 +51,17 @@ export default async function handler(req, res) {
       </head>
       <body style="margin: 0; padding: 20px; background-color: #F5F3EE; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #111111;">
         <div style="max-width: 600px; margin: 0 auto; background-color: #FFFFFF; border: 1px solid rgba(17,17,17,0.12); border-radius: 24px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.05);">
-          
-          <!-- Header -->
           <div style="background-color: #111111; padding: 28px 32px; color: #FFFFFF;">
-            <div style="display: flex; align-items: center; justify-content: space-between;">
-              <span style="font-size: 18px; font-weight: 800; letter-spacing: 1px;">ROUNAK <span style="color: #2457FF;">×</span> MANISHA</span>
-            </div>
+            <span style="font-size: 18px; font-weight: 800; letter-spacing: 1px;">ROUNAK <span style="color: #2457FF;">×</span> MANISHA</span>
             <div style="margin-top: 10px; display: inline-block; background-color: rgba(224, 109, 83, 0.15); border: 1px solid rgba(224, 109, 83, 0.4); color: #E06D53; padding: 4px 12px; border-radius: 9999px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">
               📅 30-Min Discovery Call Request
             </div>
           </div>
-
-          <!-- Body -->
           <div style="padding: 32px;">
             <h2 style="margin: 0 0 8px 0; font-size: 20px; font-weight: 800; color: #111111;">New Discovery Call Booking</h2>
             <p style="margin: 0 0 24px 0; font-size: 14px; color: #6F6F6A; line-height: 1.5;">
-              A client has requested a 30-minute discovery call from your portfolio.
+              A client has requested a 30-minute discovery call from your portfolio website.
             </p>
-
             <table style="width: 100%; border-collapse: collapse; background-color: #FAF9F6; border: 1px solid rgba(17,17,17,0.08); border-radius: 16px; overflow: hidden;">
               <tr style="border-bottom: 1px solid rgba(17,17,17,0.06);">
                 <td style="padding: 14px 18px; font-size: 12px; font-weight: 700; color: #6F6F6A; text-transform: uppercase; width: 35%;">Client Name</td>
@@ -89,7 +81,7 @@ export default async function handler(req, res) {
               </tr>
               <tr style="border-bottom: 1px solid rgba(17,17,17,0.06);">
                 <td style="padding: 14px 18px; font-size: 12px; font-weight: 700; color: #6F6F6A; text-transform: uppercase;">Preferred Time</td>
-                <td style="padding: 14px 18px; font-size: 14px; font-weight: 700; color: #2457FF;">${preferredTime || '11:00 AM IST'}</td>
+                <td style="padding: 14px 18px; font-size: 14px; color: #2457FF;">${preferredTime || '11:00 AM IST'}</td>
               </tr>
               <tr style="border-bottom: 1px solid rgba(17,17,17,0.06);">
                 <td style="padding: 14px 18px; font-size: 12px; font-weight: 700; color: #6F6F6A; text-transform: uppercase;">Discussion Topic</td>
@@ -100,16 +92,12 @@ export default async function handler(req, res) {
                 <td style="padding: 14px 18px; font-size: 14px; color: #333333; line-height: 1.5; white-space: pre-wrap;">${notes || 'No additional notes provided.'}</td>
               </tr>
             </table>
-
-            <!-- Call to Action -->
             <div style="margin-top: 28px; text-align: center;">
               <a href="mailto:${email}?subject=Re:%20Discovery%20Call%20Booking%20—%20Rounak%20%26%20Manisha" style="display: inline-block; background-color: #111111; color: #FFFFFF; text-decoration: none; padding: 14px 28px; border-radius: 9999px; font-size: 13px; font-weight: 800; letter-spacing: 0.5px; text-transform: uppercase;">
                 Reply Directly to ${name} →
               </a>
             </div>
           </div>
-
-          <!-- Footer -->
           <div style="padding: 16px 32px; background-color: #FAF9F6; border-top: 1px solid rgba(17,17,17,0.06); font-size: 11px; color: #8C8C88; text-align: center;">
             Sent automatically from Rounak × Manisha Portfolio • ${new Date().toUTCString()}
           </div>
@@ -126,24 +114,17 @@ export default async function handler(req, res) {
       </head>
       <body style="margin: 0; padding: 20px; background-color: #F5F3EE; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #111111;">
         <div style="max-width: 600px; margin: 0 auto; background-color: #FFFFFF; border: 1px solid rgba(17,17,17,0.12); border-radius: 24px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.05);">
-          
-          <!-- Header -->
           <div style="background-color: #111111; padding: 28px 32px; color: #FFFFFF;">
-            <div style="display: flex; align-items: center; justify-content: space-between;">
-              <span style="font-size: 18px; font-weight: 800; letter-spacing: 1px;">ROUNAK <span style="color: #2457FF;">×</span> MANISHA</span>
-            </div>
+            <span style="font-size: 18px; font-weight: 800; letter-spacing: 1px;">ROUNAK <span style="color: #2457FF;">×</span> MANISHA</span>
             <div style="margin-top: 10px; display: inline-block; background-color: rgba(36, 87, 255, 0.15); border: 1px solid rgba(36, 87, 255, 0.4); color: #2457FF; padding: 4px 12px; border-radius: 9999px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">
               🚀 New Project Inquiry
             </div>
           </div>
-
-          <!-- Body -->
           <div style="padding: 32px;">
             <h2 style="margin: 0 0 8px 0; font-size: 20px; font-weight: 800; color: #111111;">New Project Inquiry</h2>
             <p style="margin: 0 0 24px 0; font-size: 14px; color: #6F6F6A; line-height: 1.5;">
               A potential client has submitted an inquiry through the "Start a Project" form.
             </p>
-
             <table style="width: 100%; border-collapse: collapse; background-color: #FAF9F6; border: 1px solid rgba(17,17,17,0.08); border-radius: 16px; overflow: hidden;">
               <tr style="border-bottom: 1px solid rgba(17,17,17,0.06);">
                 <td style="padding: 14px 18px; font-size: 12px; font-weight: 700; color: #6F6F6A; text-transform: uppercase; width: 35%;">Client Name</td>
@@ -159,23 +140,19 @@ export default async function handler(req, res) {
               </tr>
               <tr style="border-bottom: 1px solid rgba(17,17,17,0.06);">
                 <td style="padding: 14px 18px; font-size: 12px; font-weight: 700; color: #6F6F6A; text-transform: uppercase;">Estimated Budget</td>
-                <td style="padding: 14px 18px; font-size: 14px; font-weight: 700; color: #2457FF;">${budget || 'Not specified'}</td>
+                <td style="padding: 14px 18px; font-size: 14px; color: #2457FF;">${budget || 'Not specified'}</td>
               </tr>
               <tr>
                 <td style="padding: 14px 18px; font-size: 12px; font-weight: 700; color: #6F6F6A; text-transform: uppercase; vertical-align: top;">Project Details</td>
                 <td style="padding: 14px 18px; font-size: 14px; color: #333333; line-height: 1.5; white-space: pre-wrap;">${message || 'No additional details provided.'}</td>
               </tr>
             </table>
-
-            <!-- Call to Action -->
             <div style="margin-top: 28px; text-align: center;">
               <a href="mailto:${email}?subject=Re:%20Project%20Inquiry%20—%20Rounak%20%26%20Manisha" style="display: inline-block; background-color: #2457FF; color: #FFFFFF; text-decoration: none; padding: 14px 28px; border-radius: 9999px; font-size: 13px; font-weight: 800; letter-spacing: 0.5px; text-transform: uppercase;">
                 Reply Directly to ${name} →
               </a>
             </div>
           </div>
-
-          <!-- Footer -->
           <div style="padding: 16px 32px; background-color: #FAF9F6; border-top: 1px solid rgba(17,17,17,0.06); font-size: 11px; color: #8C8C88; text-align: center;">
             Sent automatically from Rounak × Manisha Portfolio • ${new Date().toUTCString()}
           </div>
@@ -187,8 +164,40 @@ export default async function handler(req, res) {
     // Resend's allowed onboarding / test sender
     const fromSender = 'Rounak × Manisha <onboarding@resend.dev>';
 
-    // Prepare structured payload for direct dual-delivery
-    const directPayload = {
+    // Dispatches array
+    const dispatches = [];
+
+    // 1. Manisha's Delivery via Resend (Sends to verified account email)
+    if (process.env.RESEND_API_KEY) {
+      dispatches.push(
+        fetch('https://api.resend.com/emails', {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${process.env.RESEND_API_KEY.trim()}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            from: fromSender,
+            to: ['manishanandi2005@gmail.com'],
+            reply_to: email,
+            subject: subject,
+            html: htmlContent
+          })
+        })
+          .then(async (res) => {
+            const data = await res.json().catch(() => ({}));
+            if (!res.ok) console.error('Resend Manisha dispatch failed:', data);
+            return data;
+          })
+          .catch((err) => {
+            console.error('Resend error:', err);
+            return null;
+          })
+      );
+    }
+
+    // 2. Rounak's Delivery via FormSubmit (With proper Origin / Referer headers)
+    const rounakPayload = {
       _subject: subject,
       _replyto: email,
       _captcha: 'false',
@@ -201,54 +210,49 @@ export default async function handler(req, res) {
       'Preferred Date': preferredDate || 'Flexible',
       'Preferred Time': preferredTime || '11:00 AM IST',
       'Project / Discussion Topic': topic || service || 'General Inquiry',
-      'Project Details / Notes': message || notes || 'No additional details.'
+      'Project Details / Notes': message || notes || 'No additional details provided.'
     };
 
-    // Parallel Dispatches to ensure BOTH Rounak and Manisha receive notifications immediately
-    const promises = [];
-
-    // 1. Resend API Dispatch (Delivers to Resend account owner & all recipients once domain is configured)
-    if (process.env.RESEND_API_KEY) {
-      promises.push(
-        fetch('https://api.resend.com/emails', {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${process.env.RESEND_API_KEY.trim()}`,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            from: fromSender,
-            to: recipients,
-            reply_to: email,
-            subject: subject,
-            html: htmlContent
-          })
-        }).then(r => r.json()).catch(err => {
-          console.error('Resend error:', err);
-          return null;
-        })
-      );
-    }
-
-    // 2. Direct Rounak Dispatch (Guarantees delivery to rounakkayal0@gmail.com even while in Resend onboarding sandbox)
-    promises.push(
+    dispatches.push(
       fetch('https://formsubmit.co/ajax/rounakkayal0@gmail.com', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Accept: 'application/json'
+          Accept: 'application/json',
+          Origin: 'https://rkmn-portfolio.vercel.app',
+          Referer: 'https://rkmn-portfolio.vercel.app/'
         },
-        body: JSON.stringify(directPayload)
-      }).catch(err => {
-        console.error('Rounak direct dispatch error:', err);
-        return null;
+        body: JSON.stringify(rounakPayload)
       })
+        .then(async (res) => {
+          const data = await res.json().catch(() => ({}));
+          return data;
+        })
+        .catch((err) => {
+          console.error('FormSubmit Rounak dispatch error:', err);
+          return null;
+        })
     );
 
-    // Wait for dispatches
-    await Promise.allSettled(promises);
+    // Also send backup to FormSubmit for Manisha in case Resend is paused
+    if (!process.env.RESEND_API_KEY) {
+      dispatches.push(
+        fetch('https://formsubmit.co/ajax/manishanandi2005@gmail.com', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+            Origin: 'https://rkmn-portfolio.vercel.app',
+            Referer: 'https://rkmn-portfolio.vercel.app/'
+          },
+          body: JSON.stringify(rounakPayload)
+        }).catch(() => null)
+      );
+    }
 
-    return res.status(200).json({ success: true, delivered: true });
+    await Promise.allSettled(dispatches);
+
+    return res.status(200).json({ success: true, message: 'Dispatched to both recipients' });
   } catch (error) {
     console.error('Contact handler error:', error);
     return res.status(500).json({ error: error.message || 'Internal Server Error' });
