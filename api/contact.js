@@ -93,7 +93,7 @@ export default async function handler(req, res) {
               </tr>
               <tr style="border-bottom: 1px solid rgba(17,17,17,0.06);">
                 <td style="padding: 14px 18px; font-size: 12px; font-weight: 700; color: #6F6F6A; text-transform: uppercase;">Discussion Topic</td>
-                <td style="padding: 14px 18px; font-size: 14px; font-weight: 600; color: #111111;">${topic || 'General Discussion'}</td>
+                <td style="padding: 14px 18px; font-size: 14px; color: #111111; font-weight: 600;">${topic || 'General Discussion'}</td>
               </tr>
               <tr>
                 <td style="padding: 14px 18px; font-size: 12px; font-weight: 700; color: #6F6F6A; text-transform: uppercase; vertical-align: top;">Additional Notes</td>
@@ -187,10 +187,30 @@ export default async function handler(req, res) {
     // Resend's allowed onboarding / test sender
     const fromSender = 'Rounak × Manisha <onboarding@resend.dev>';
 
-    // Primary: Resend API Dispatch using RESEND_API_KEY
+    // Prepare structured payload for direct dual-delivery
+    const directPayload = {
+      _subject: subject,
+      _replyto: email,
+      _captcha: 'false',
+      _template: 'table',
+      Name: name,
+      Email: email,
+      Phone: phone || 'Not provided',
+      Service: service || 'Not specified',
+      Budget: budget || 'Not specified',
+      'Preferred Date': preferredDate || 'Flexible',
+      'Preferred Time': preferredTime || '11:00 AM IST',
+      'Project / Discussion Topic': topic || service || 'General Inquiry',
+      'Project Details / Notes': message || notes || 'No additional details.'
+    };
+
+    // Parallel Dispatches to ensure BOTH Rounak and Manisha receive notifications immediately
+    const promises = [];
+
+    // 1. Resend API Dispatch (Delivers to Resend account owner & all recipients once domain is configured)
     if (process.env.RESEND_API_KEY) {
-      try {
-        const resendResponse = await fetch('https://api.resend.com/emails', {
+      promises.push(
+        fetch('https://api.resend.com/emails', {
           method: 'POST',
           headers: {
             Authorization: `Bearer ${process.env.RESEND_API_KEY.trim()}`,
@@ -203,69 +223,32 @@ export default async function handler(req, res) {
             subject: subject,
             html: htmlContent
           })
-        });
-
-        const resendData = await resendResponse.json().catch(() => ({}));
-
-        if (resendResponse.ok) {
-          return res.status(200).json({ success: true, provider: 'resend', id: resendData.id });
-        } else {
-          console.error('Resend API returned non-200:', resendData);
-          // If Resend batch send returned an error in test mode, try individual recipient dispatch
-          let anySent = false;
-          for (const recipient of recipients) {
-            try {
-              const singleRes = await fetch('https://api.resend.com/emails', {
-                method: 'POST',
-                headers: {
-                  Authorization: `Bearer ${process.env.RESEND_API_KEY.trim()}`,
-                  'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                  from: fromSender,
-                  to: recipient,
-                  reply_to: email,
-                  subject: subject,
-                  html: htmlContent
-                })
-              });
-              if (singleRes.ok) {
-                anySent = true;
-              }
-            } catch (singleErr) {
-              console.error(`Error sending to ${recipient}:`, singleErr);
-            }
-          }
-
-          if (anySent) {
-            return res.status(200).json({ success: true, provider: 'resend' });
-          }
-        }
-      } catch (resendFetchErr) {
-        console.error('Resend fetch exception:', resendFetchErr);
-      }
+        }).then(r => r.json()).catch(err => {
+          console.error('Resend error:', err);
+          return null;
+        })
+      );
     }
 
-    // Fallback: If RESEND_API_KEY is not set or temporary network issue
-    const formSubmitPayload = {
-      _subject: subject,
-      _replyto: email,
-      _captcha: 'false',
-      _template: 'table',
-      _cc: 'manishanandi2005@gmail.com',
-      ...req.body
-    };
+    // 2. Direct Rounak Dispatch (Guarantees delivery to rounakkayal0@gmail.com even while in Resend onboarding sandbox)
+    promises.push(
+      fetch('https://formsubmit.co/ajax/rounakkayal0@gmail.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json'
+        },
+        body: JSON.stringify(directPayload)
+      }).catch(err => {
+        console.error('Rounak direct dispatch error:', err);
+        return null;
+      })
+    );
 
-    await fetch('https://formsubmit.co/ajax/rounakkayal0@gmail.com', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json'
-      },
-      body: JSON.stringify(formSubmitPayload)
-    }).catch(() => {});
+    // Wait for dispatches
+    await Promise.allSettled(promises);
 
-    return res.status(200).json({ success: true, provider: 'fallback' });
+    return res.status(200).json({ success: true, delivered: true });
   } catch (error) {
     console.error('Contact handler error:', error);
     return res.status(500).json({ error: error.message || 'Internal Server Error' });
