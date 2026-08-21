@@ -19,28 +19,31 @@ export default function Testimonials() {
   const t = testimonialsData[currentIndex];
 
   return (
-    <section className="relative py-16 sm:py-24 md:py-36 px-4 sm:px-6 md:px-12 bg-[#F5F3EE] border-t border-[#111111]/10 z-10 w-full overflow-hidden">
+    <section className="relative py-16 sm:py-24 md:py-36 px-3 sm:px-6 lg:px-8 xl:px-12 bg-[#F5F3EE] border-t border-[#111111]/10 z-10 w-full overflow-hidden">
       <div className="max-w-5xl mx-auto w-full">
         {/* Section Header */}
         <div className="text-center mb-12 md:mb-16">
-          {/* Pill-Style Section Eyebrow Badge */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#2457FF]/10 border border-[#2457FF]/30 text-[#2457FF] text-xs font-display font-bold mb-3 uppercase tracking-wider">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>ENDORSEMENTS & COLLABORATION</span>
+          {/* Pill-Style Section Eyebrow Badge — Placed above heading */}
+          <div className="mb-3 sm:mb-4 flex justify-center">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#2457FF]/10 border border-[#2457FF]/30 text-[#2457FF] text-xs font-display font-bold uppercase tracking-wider">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>ENDORSEMENTS & COLLABORATION</span>
+            </div>
           </div>
 
           <MagneticHeading
             text="WHAT PEOPLE SAY"
             as="h2"
-            className="font-display text-[clamp(2.5rem,8vw,5.5rem)] font-extrabold tracking-tight text-[#111111] leading-none"
+            noWrap={true}
+            className="font-display text-[clamp(1.85rem,5vw,4.8rem)] xl:text-[clamp(2.5rem,6vw,5.5rem)] font-extrabold tracking-tight text-[#111111] leading-none sm:whitespace-nowrap justify-center"
           />
-          <p className="font-serif italic text-[clamp(1.1rem,4vw,1.5rem)] text-[#2457FF] mt-2 font-normal">
+          <p className="font-serif italic text-[clamp(1.1rem,4vw,1.5rem)] text-[#2457FF] mt-2 sm:mt-2.5 font-normal">
             endorsements from clients and engineering partners
           </p>
         </div>
 
         {/* Testimonial Quote Card */}
-        <div className="relative rounded-2xl sm:rounded-3xl p-6 sm:p-12 md:p-16 light-card border border-[#111111]/12 overflow-hidden text-center shadow-xl bg-white w-full">
+        <div className="relative rounded-2xl sm:rounded-3xl p-4 sm:p-12 md:p-16 light-card border border-[#111111]/12 overflow-hidden text-center shadow-xl bg-white w-full">
           <Quote className="w-10 sm:w-12 h-10 sm:h-12 text-[#2457FF]/30 mx-auto mb-4 sm:mb-6" />
 
           {/* Star Rating */}

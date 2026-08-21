@@ -30,15 +30,15 @@ export default function StatsSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative py-16 sm:py-20 px-4 sm:px-6 md:px-12 bg-[#F5F3EE] border-t border-b border-[#111111]/10 z-10 w-full overflow-hidden"
+      className="relative py-12 sm:py-20 px-3 sm:px-6 lg:px-8 xl:px-12 bg-[#F5F3EE] border-t border-b border-[#111111]/10 z-10 w-full overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 w-full">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-8 w-full">
         {stats.map((stat, idx) => (
           <div
             key={stat.label}
             onMouseEnter={() => setCursor('magnet')}
             onMouseLeave={resetCursor}
-            className={`p-6 sm:p-8 rounded-3xl light-card border border-[#111111]/10 flex flex-col justify-between transition-all duration-500 hover:border-[#2457FF]/40 hover:-translate-y-1 bg-white ${
+            className={`p-4 sm:p-8 rounded-2xl sm:rounded-3xl light-card border border-[#111111]/10 flex flex-col justify-between transition-all duration-500 hover:border-[#2457FF]/40 hover:-translate-y-1 bg-white ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
             }`}
             style={{ transitionDelay: `${idx * 150}ms` }}

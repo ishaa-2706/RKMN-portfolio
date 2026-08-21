@@ -16,27 +16,75 @@ export default function Playground() {
   const [fontWeight, setFontWeight] = useState(800);
   const [letterSpacing, setLetterSpacing] = useState(2);
 
-  // Audio Synth Tone Trigger
-  const playTone = (freq) => {
+  // Audio Synth Context & Active Note State
+  const audioCtxRef = useRef(null);
+  const lastTriggerRef = useRef(0);
+  const [activeNote, setActiveNote] = useState(null);
+
+  // Get or initialize Web Audio Context on user gesture (iOS Safari & Chrome compatible)
+  const getAudioContext = () => {
     try {
-      const AudioCtx = window.AudioContext || window.webkitAudioContext;
-      const ctx = new AudioCtx();
+      if (!audioCtxRef.current) {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (AudioCtx) {
+          audioCtxRef.current = new AudioCtx();
+        }
+      }
+      if (audioCtxRef.current && audioCtxRef.current.state === 'suspended') {
+        audioCtxRef.current.resume();
+      }
+      return audioCtxRef.current;
+    } catch (e) {
+      console.warn('Web Audio initialization error:', e);
+      return null;
+    }
+  };
+
+  // Audio Synth Tone Trigger
+  const playTone = (freq, noteName) => {
+    try {
+      const ctx = getAudioContext();
+      if (!ctx) return;
+
+      // Resume context if suspended
+      if (ctx.state === 'suspended') {
+        ctx.resume();
+      }
+
+      const now = ctx.currentTime;
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
 
       osc.type = 'sine';
-      osc.frequency.setValueAtTime(freq, ctx.currentTime);
-      gain.gain.setValueAtTime(0.15, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.8);
+      osc.frequency.setValueAtTime(freq, now);
+
+      // Smooth envelope attack and decay
+      gain.gain.setValueAtTime(0.0001, now);
+      gain.gain.exponentialRampToValueAtTime(0.2, now + 0.03);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.85);
 
       osc.connect(gain);
       gain.connect(ctx.destination);
 
-      osc.start();
-      osc.stop(ctx.currentTime + 0.8);
+      osc.start(now);
+      osc.stop(now + 0.85);
+
+      // Trigger active visual state
+      setActiveNote(noteName);
+      setTimeout(() => {
+        setActiveNote((prev) => (prev === noteName ? null : prev));
+      }, 300);
     } catch (e) {
-      console.log('Web Audio disabled');
+      console.warn('Web Audio playback error:', e);
     }
+  };
+
+  const handleNoteTrigger = (freq, noteName) => {
+    const now = Date.now();
+    // Guard against duplicate execution from pointerdown + click on touch devices
+    if (now - lastTriggerRef.current < 80) return;
+    lastTriggerRef.current = now;
+    playTone(freq, noteName);
   };
 
   // Render Fluid Particle Sandbox
@@ -106,11 +154,11 @@ export default function Playground() {
   }, [activeTab, particleColor]);
 
   return (
-    <section id="playground" className="relative py-16 sm:py-24 md:py-36 px-4 sm:px-6 md:px-12 bg-[#F5F3EE] border-t border-[#111111]/10 z-10 w-full overflow-hidden">
+    <section id="playground" className="relative py-16 sm:py-24 md:py-36 px-3 sm:px-6 lg:px-8 xl:px-12 bg-[#F5F3EE] border-t border-[#111111]/10 z-10 w-full overflow-hidden">
       <div className="max-w-7xl mx-auto w-full">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 md:mb-12 gap-4">
-          <div className="w-full md:max-w-2xl lg:max-w-3xl">
+          <div className="w-full md:max-w-xl lg:max-w-2xl xl:max-w-3xl">
             {/* Coral/Orange Eyebrow Badge matching Vercel reference */}
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#E06D53]/10 border border-[#E06D53]/30 text-[#E06D53] text-xs font-display font-bold mb-3 uppercase tracking-wider">
               <Sparkles className="w-3.5 h-3.5" />
@@ -120,13 +168,14 @@ export default function Playground() {
             <MagneticHeading
               text="THE PLAYGROUND"
               as="h2"
-              className="font-display text-[clamp(2.2rem,6vw,5.2rem)] font-extrabold tracking-tight text-[#111111] leading-none whitespace-nowrap md:flex-nowrap"
+              noWrap={true}
+              className="font-display text-[clamp(1.75rem,4.5vw,4.5rem)] xl:text-[clamp(2.4rem,5.5vw,5.2rem)] font-extrabold tracking-tight text-[#111111] leading-none sm:whitespace-nowrap justify-start"
             />
             <p className="font-serif italic text-[clamp(1.1rem,4vw,1.5rem)] text-[#E06D53] mt-2 font-normal">
               experimental code & spatial explorations
             </p>
           </div>
-          <p className="text-xs sm:text-sm text-[#6F6F6A] font-display max-w-md font-semibold leading-relaxed">
+          <p className="text-xs sm:text-sm text-[#6F6F6A] font-display max-w-xs md:max-w-sm lg:max-w-md font-semibold leading-relaxed shrink-0">
             Mini creative code experiments, audio synthesizers, and canvas physics toys built in our design lab.
           </p>
         </div>
@@ -255,32 +304,51 @@ export default function Playground() {
           {/* TAB 3: Ambient Synth */}
           {activeTab === 'audio' && (
             <div className="flex flex-col justify-between h-full py-4">
-              <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center justify-between mb-4 sm:mb-6">
                 <span className="text-xs font-display text-[#6F6F6A] flex items-center gap-2 font-semibold">
-                  <Volume2 className="w-4 h-4 text-[#2457FF]" />
-                  <span>Click pads to synthesize pentatonic frequency harmonics</span>
+                  <Volume2 className="w-4 h-4 text-[#2457FF] shrink-0" />
+                  <span>Tap pads to synthesize pentatonic frequency harmonics</span>
                 </span>
               </div>
 
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 my-auto">
+              <div className="grid grid-cols-1 min-[340px]:grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4 my-auto w-full">
                 {[
                   { name: 'C4 — Ground', freq: 261.63, color: '#2457FF' },
                   { name: 'E4 — Resonance', freq: 329.63, color: '#E06D53' },
                   { name: 'G4 — Atmosphere', freq: 392.00, color: '#5B8266' },
                   { name: 'B4 — Sparkle', freq: 493.88, color: '#111111' },
-                ].map((note) => (
-                  <button
-                    key={note.name}
-                    onClick={() => playTone(note.freq)}
-                    onMouseEnter={() => setCursor('magnet')}
-                    onMouseLeave={resetCursor}
-                    className="p-6 sm:p-8 rounded-2xl light-card border border-[#111111]/10 hover:border-[#111111]/30 flex flex-col items-center justify-center transition-all hover:scale-105 active:scale-95 group bg-[#F5F3EE]"
-                  >
-                    <Play className="w-6 sm:w-8 h-6 sm:h-8 mb-3 transition-transform group-hover:scale-125" style={{ color: note.color }} />
-                    <span className="font-display text-xs font-bold text-[#111111]">{note.name}</span>
-                    <span className="text-[10px] font-display text-[#6F6F6A] mt-1 font-semibold">{note.freq} Hz</span>
-                  </button>
-                ))}
+                ].map((note) => {
+                  const isPlaying = activeNote === note.name;
+                  return (
+                    <button
+                      key={note.name}
+                      type="button"
+                      onPointerDown={() => handleNoteTrigger(note.freq, note.name)}
+                      onClick={() => handleNoteTrigger(note.freq, note.name)}
+                      onMouseEnter={() => setCursor('magnet')}
+                      onMouseLeave={resetCursor}
+                      style={{ touchAction: 'manipulation' }}
+                      className={`p-4 sm:p-6 md:p-8 rounded-2xl light-card border transition-all duration-200 select-none cursor-pointer flex flex-col items-center justify-center text-center w-full min-h-[115px] sm:min-h-[140px] md:min-h-[160px] group ${
+                        isPlaying
+                          ? 'border-[#2457FF] bg-white scale-95 shadow-md ring-2 ring-[#2457FF]/30'
+                          : 'border-[#111111]/10 hover:border-[#111111]/30 active:scale-95 bg-[#F5F3EE]'
+                      }`}
+                    >
+                      <Play
+                        className={`w-5 sm:w-8 h-5 sm:h-8 mb-2 sm:mb-3 transition-transform ${
+                          isPlaying ? 'scale-125' : 'group-hover:scale-110'
+                        }`}
+                        style={{ color: note.color }}
+                      />
+                      <span className="font-display text-[11px] sm:text-xs font-bold text-[#111111] leading-tight">
+                        {note.name}
+                      </span>
+                      <span className="text-[9px] sm:text-[10px] font-display text-[#6F6F6A] mt-1 font-semibold">
+                        {note.freq} Hz
+                      </span>
+                    </button>
+                  );
+                })}
               </div>
             </div>
           )}

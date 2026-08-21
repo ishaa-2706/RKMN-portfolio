@@ -11,7 +11,7 @@ export async function submitContactInquiry(formData) {
     formType: 'inquiry',
     name: formData.name,
     email: formData.email,
-    service: formData.service,
+    helpNeeded: formData.helpNeeded?.trim() || '',
     budget: formData.budget,
     message: formData.message?.trim() || 'No additional details provided.'
   };
@@ -59,14 +59,33 @@ async function dispatchEmail(payload) {
     ? `📅 30-Min Discovery Call Request — ${payload.name}`
     : `🚀 New Project Inquiry — ${payload.name}`;
 
-  const formSubmitData = {
-    _subject: subject,
-    _replyto: payload.email,
-    _captcha: 'false',
-    _template: 'table',
-    _cc: 'manishanandi2005@gmail.com',
-    ...payload
-  };
+  const formSubmitData = isCall
+    ? {
+        _subject: subject,
+        _replyto: payload.email,
+        _captcha: 'false',
+        _template: 'table',
+        _cc: 'manishanandi2005@gmail.com',
+        'Client Name': payload.name,
+        'Client Email': payload.email,
+        'Phone Number': payload.phone,
+        'Preferred Date': payload.preferredDate,
+        'Preferred Time': payload.preferredTime,
+        'Topic': payload.topic,
+        'Additional Notes': payload.notes
+      }
+    : {
+        _subject: subject,
+        _replyto: payload.email,
+        _captcha: 'false',
+        _template: 'table',
+        _cc: 'manishanandi2005@gmail.com',
+        'Client Name': payload.name,
+        'Client Email': payload.email,
+        'How Can We Help You?': payload.helpNeeded,
+        'Estimated Budget': payload.budget,
+        'Project Details & Vision': payload.message
+      };
 
   try {
     await Promise.allSettled([

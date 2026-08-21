@@ -24,6 +24,7 @@ export default async function handler(req, res) {
       email,
       phone,
       service,
+      helpNeeded,
       budget,
       topic,
       preferredDate,
@@ -39,7 +40,7 @@ export default async function handler(req, res) {
     const isCall = formType === 'call' || !!preferredDate;
     const subject = isCall
       ? `📅 30-Min Discovery Call Booking: ${name}`
-      : `🚀 New Project Inquiry: ${name} (${service || 'General'})`;
+      : `🚀 New Project Inquiry: ${name}`;
 
     const htmlContent = isCall
       ? `
@@ -135,15 +136,15 @@ export default async function handler(req, res) {
                 <td style="padding: 14px 18px; font-size: 14px; color: #2457FF;"><a href="mailto:${email}" style="color: #2457FF; text-decoration: none; font-weight: 600;">${email}</a></td>
               </tr>
               <tr style="border-bottom: 1px solid rgba(17,17,17,0.06);">
-                <td style="padding: 14px 18px; font-size: 12px; font-weight: 700; color: #6F6F6A; text-transform: uppercase;">Service Required</td>
-                <td style="padding: 14px 18px; font-size: 14px; font-weight: 700; color: #111111;">${service || 'Full Website Experience'}</td>
+                <td style="padding: 14px 18px; font-size: 12px; font-weight: 700; color: #6F6F6A; text-transform: uppercase; vertical-align: top;">How Can We Help You?</td>
+                <td style="padding: 14px 18px; font-size: 14px; color: #111111; line-height: 1.5; white-space: pre-wrap;">${helpNeeded || service || 'Not specified'}</td>
               </tr>
               <tr style="border-bottom: 1px solid rgba(17,17,17,0.06);">
                 <td style="padding: 14px 18px; font-size: 12px; font-weight: 700; color: #6F6F6A; text-transform: uppercase;">Estimated Budget</td>
                 <td style="padding: 14px 18px; font-size: 14px; font-weight: 700; color: #2457FF;">${budget || 'Not specified'}</td>
               </tr>
               <tr>
-                <td style="padding: 14px 18px; font-size: 12px; font-weight: 700; color: #6F6F6A; text-transform: uppercase; vertical-align: top;">Project Details</td>
+                <td style="padding: 14px 18px; font-size: 12px; font-weight: 700; color: #6F6F6A; text-transform: uppercase; vertical-align: top;">Project Details & Vision</td>
                 <td style="padding: 14px 18px; font-size: 14px; color: #333333; line-height: 1.5; white-space: pre-wrap;">${message || 'No additional details provided.'}</td>
               </tr>
             </table>
@@ -224,21 +225,31 @@ export default async function handler(req, res) {
     }
 
     // 3. Fallback / Direct Forward to FormSubmit for Rounak
-    const rounakPayload = {
-      _subject: subject,
-      _replyto: email,
-      _captcha: 'false',
-      _template: 'table',
-      Name: name,
-      Email: email,
-      Phone: phone || 'Not provided',
-      Service: service || 'Not specified',
-      Budget: budget || 'Not specified',
-      'Preferred Date': preferredDate || 'Flexible',
-      'Preferred Time': preferredTime || '11:00 AM IST',
-      'Project / Discussion Topic': topic || service || 'General Inquiry',
-      'Project Details / Notes': message || notes || 'No additional details provided.'
-    };
+    const rounakPayload = isCall
+      ? {
+          _subject: subject,
+          _replyto: email,
+          _captcha: 'false',
+          _template: 'table',
+          'Client Name': name,
+          'Client Email': email,
+          'Phone Number': phone || 'Not provided',
+          'Preferred Date': preferredDate || 'Flexible',
+          'Preferred Time': preferredTime || '11:00 AM IST',
+          'Topic': topic || 'General Inquiry',
+          'Additional Notes': notes || 'No additional notes provided.'
+        }
+      : {
+          _subject: subject,
+          _replyto: email,
+          _captcha: 'false',
+          _template: 'table',
+          'Client Name': name,
+          'Client Email': email,
+          'How Can We Help You?': helpNeeded || service || 'Not specified',
+          'Estimated Budget': budget || 'Not specified',
+          'Project Details & Vision': message || 'No additional details provided.'
+        };
 
     dispatches.push(
       fetch('https://formsubmit.co/ajax/rounakkayal0@gmail.com', {

@@ -136,7 +136,7 @@ export default function IntroCallModal({ isOpen, onClose }) {
 
   return createPortal(
     <div
-      className="fixed inset-0 z-[99999] w-screen h-screen flex items-center justify-center p-3.5 sm:p-6 md:p-8 bg-[#0E0E10]/95 backdrop-blur-2xl animate-fadeIn overflow-hidden"
+      className="fixed inset-0 z-[99999] w-screen h-screen flex items-center justify-center p-2 sm:p-6 md:p-8 bg-[#0E0E10]/95 backdrop-blur-2xl animate-fadeIn overflow-hidden"
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
@@ -146,31 +146,31 @@ export default function IntroCallModal({ isOpen, onClose }) {
     >
       <div
         data-lenis-prevent
-        className="relative w-full max-w-2xl max-h-[92vh] bg-[#F5F3EE] border border-[#111111]/20 rounded-3xl overflow-y-auto overscroll-contain shadow-2xl text-[#111111] p-6 sm:p-8 md:p-10 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden z-10"
+        className="relative w-full max-w-2xl max-h-[94vh] bg-[#F5F3EE] border border-[#111111]/20 rounded-2xl sm:rounded-3xl overflow-y-auto overscroll-contain shadow-2xl text-[#111111] p-4 sm:p-8 md:p-10 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden z-10"
       >
         {/* Floating Close Button */}
-        <div className="absolute top-5 right-5 z-20">
+        <div className="absolute top-3.5 right-3.5 sm:top-5 sm:right-5 z-20">
           <button
             onClick={onClose}
             onMouseEnter={() => setCursor('link')}
             onMouseLeave={resetCursor}
-            className="p-2.5 rounded-full bg-white text-[#111111] hover:bg-[#111111] hover:text-white border border-[#111111]/10 shadow-sm transition-all"
+            className="p-2 sm:p-2.5 rounded-full bg-white text-[#111111] hover:bg-[#111111] hover:text-white border border-[#111111]/10 shadow-sm transition-all"
             aria-label="Close modal"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 sm:w-5 h-4 sm:h-5" />
           </button>
         </div>
 
         {submitted ? (
-          <div className="py-12 sm:py-16 text-center animate-fadeIn">
-            <div className="w-20 h-20 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-600 flex items-center justify-center mx-auto mb-6 shadow-sm">
-              <CheckCircle className="w-10 h-10" />
+          <div className="py-8 sm:py-16 text-center animate-fadeIn">
+            <div className="w-16 sm:w-20 h-16 sm:h-20 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-600 flex items-center justify-center mx-auto mb-4 sm:mb-6 shadow-sm">
+              <CheckCircle className="w-8 sm:w-10 h-8 sm:h-10" />
             </div>
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100/60 text-emerald-800 text-xs font-display font-bold mb-3 uppercase tracking-wider">
               <Sparkles className="w-3.5 h-3.5" />
               <span>REQUEST CONFIRMED</span>
             </div>
-            <h3 id="intro-call-modal-title" className="font-display text-2xl sm:text-3xl font-extrabold text-[#111111] mb-2">
+            <h3 id="intro-call-modal-title" className="font-display text-xl sm:text-3xl font-extrabold text-[#111111] mb-2">
               REQUEST RECEIVED!
             </h3>
             <p className="text-xs sm:text-sm font-sans text-[#6F6F6A] max-w-md mx-auto mb-6 leading-relaxed">
@@ -179,14 +179,14 @@ export default function IntroCallModal({ isOpen, onClose }) {
               <strong className="text-[#2457FF]">{formData.preferredTime}</strong>. Rounak & Manisha will send you a calendar invite shortly.
             </p>
 
-            <div className="p-4 rounded-2xl bg-white border border-[#111111]/10 max-w-md mx-auto text-left mb-8 text-xs font-display space-y-1.5 shadow-sm">
+            <div className="p-3.5 sm:p-4 rounded-2xl bg-white border border-[#111111]/10 max-w-md mx-auto text-left mb-6 sm:mb-8 text-xs font-display space-y-1.5 shadow-sm">
               <div className="flex justify-between text-[#6F6F6A]">
                 <span>Topic:</span>
-                <span className="font-bold text-[#111111] truncate max-w-[200px]">{formData.topic}</span>
+                <span className="font-bold text-[#111111] truncate max-w-[160px] sm:max-w-[200px]">{formData.topic}</span>
               </div>
               <div className="flex justify-between text-[#6F6F6A]">
                 <span>Contact Email:</span>
-                <span className="font-bold text-[#111111]">{formData.email}</span>
+                <span className="font-bold text-[#111111] truncate max-w-[160px] sm:max-w-[200px]">{formData.email}</span>
               </div>
               {formData.phone && (
                 <div className="flex justify-between text-[#6F6F6A]">
@@ -196,12 +196,12 @@ export default function IntroCallModal({ isOpen, onClose }) {
               )}
             </div>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-2.5 sm:gap-3">
               <button
                 onClick={handleReset}
                 onMouseEnter={() => setCursor('link')}
                 onMouseLeave={resetCursor}
-                className="w-full sm:w-auto px-6 py-3 rounded-full bg-[#111111] text-white font-display text-xs hover:bg-[#2457FF] transition-all font-extrabold uppercase tracking-wider"
+                className="w-full sm:w-auto px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-[#111111] text-white font-display text-xs hover:bg-[#2457FF] transition-all font-extrabold uppercase tracking-wider"
               >
                 Book Another Call
               </button>
@@ -209,7 +209,7 @@ export default function IntroCallModal({ isOpen, onClose }) {
                 onClick={onClose}
                 onMouseEnter={() => setCursor('link')}
                 onMouseLeave={resetCursor}
-                className="w-full sm:w-auto px-6 py-3 rounded-full bg-white text-[#111111] border border-[#111111]/15 font-display text-xs hover:bg-[#F5F3EE] transition-all font-extrabold uppercase tracking-wider"
+                className="w-full sm:w-auto px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-white text-[#111111] border border-[#111111]/15 font-display text-xs hover:bg-[#F5F3EE] transition-all font-extrabold uppercase tracking-wider"
               >
                 Close
               </button>
@@ -218,28 +218,28 @@ export default function IntroCallModal({ isOpen, onClose }) {
         ) : (
           <div>
             {/* Header */}
-            <div className="mb-6 pr-10">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#E06D53]/10 border border-[#E06D53]/30 text-[#E06D53] text-xs font-display font-bold mb-2.5 uppercase tracking-wider">
+            <div className="mb-4 sm:mb-6 pr-8 sm:pr-10">
+              <div className="inline-flex items-center gap-1.5 sm:gap-2 px-3 py-1 rounded-full bg-[#E06D53]/10 border border-[#E06D53]/30 text-[#E06D53] text-[11px] sm:text-xs font-display font-bold mb-2 uppercase tracking-wider">
                 <Calendar className="w-3.5 h-3.5" />
                 <span>30-MIN DISCOVERY CALL</span>
               </div>
-              <h2 id="intro-call-modal-title" className="font-display text-2xl sm:text-3xl font-extrabold text-[#111111] leading-tight">
+              <h2 id="intro-call-modal-title" className="font-display text-xl sm:text-3xl font-extrabold text-[#111111] leading-tight">
                 BOOK A 30-MIN INTRO CALL
               </h2>
-              <p className="font-serif italic text-sm sm:text-base text-[#2457FF] mt-1 font-normal">
+              <p className="font-serif italic text-xs sm:text-base text-[#2457FF] mt-1 font-normal">
                 let's connect, explore ideas & discuss how we can build together
               </p>
             </div>
 
             {/* Validation Error Banner */}
             {errorMessage && (
-              <div className="mb-5 p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-display flex items-center gap-2 font-bold animate-fadeIn">
+              <div className="mb-4 sm:mb-5 p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-display flex items-center gap-2 font-bold animate-fadeIn">
                 <AlertCircle className="w-4 h-4 shrink-0" />
                 <span>{errorMessage}</span>
               </div>
             )}
 
-            <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
+            <form onSubmit={handleSubmit} className="space-y-3.5 sm:space-y-5">
               {/* Full Name & Email */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
                 <div>

@@ -9,27 +9,30 @@ export default function TechToolbox() {
   const [activeCategory, setActiveCategory] = useState(0);
 
   return (
-    <section className="relative py-16 sm:py-24 md:py-36 px-4 sm:px-6 md:px-12 bg-[#F5F3EE] border-t border-[#111111]/10 z-10 w-full overflow-hidden">
+    <section className="relative py-16 sm:py-24 md:py-36 px-3 sm:px-6 lg:px-8 xl:px-12 bg-[#F5F3EE] border-t border-[#111111]/10 z-10 w-full overflow-hidden">
       <div className="max-w-7xl mx-auto w-full">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 md:mb-16 gap-4">
-          <div className="w-full md:max-w-2xl">
-            {/* Pill-Style Section Eyebrow Badge */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#2457FF]/10 border border-[#2457FF]/30 text-[#2457FF] text-xs font-display font-bold mb-3 uppercase tracking-wider">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>ENGINEERING TOOLBOX</span>
+          <div className="w-full md:max-w-xl lg:max-w-2xl">
+            {/* Pill-Style Section Eyebrow Badge — Placed above heading */}
+            <div className="mb-3 sm:mb-4 block">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#2457FF]/10 border border-[#2457FF]/30 text-[#2457FF] text-xs font-display font-bold uppercase tracking-wider">
+                <Sparkles className="w-3.5 h-3.5" />
+                <span>ENGINEERING TOOLBOX</span>
+              </div>
             </div>
 
             <MagneticHeading
               text="THE TOOLBOX"
               as="h2"
-              className="font-display text-[clamp(2.5rem,8vw,5.5rem)] font-extrabold tracking-tight text-[#111111] leading-none"
+              noWrap={true}
+              className="font-display text-[clamp(1.85rem,4.8vw,4.5rem)] xl:text-[clamp(2.5rem,5.5vw,5.5rem)] font-extrabold tracking-tight text-[#111111] leading-none sm:whitespace-nowrap justify-start"
             />
-            <p className="font-serif italic text-[clamp(1.1rem,4vw,1.5rem)] text-[#2457FF] mt-2">
+            <p className="font-serif italic text-[clamp(1.1rem,4vw,1.5rem)] text-[#2457FF] mt-2 sm:mt-2.5">
               technologies & frameworks we craft with
             </p>
           </div>
-          <p className="text-xs sm:text-sm text-[#6F6F6A] font-display max-w-md font-semibold leading-relaxed">
+          <p className="text-xs sm:text-sm text-[#6F6F6A] font-display max-w-xs md:max-w-sm lg:max-w-md font-semibold leading-relaxed shrink-0">
             Production-tested languages, creative frameworks, motion physics engines, and design software.
           </p>
         </div>

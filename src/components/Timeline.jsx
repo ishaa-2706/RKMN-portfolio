@@ -40,12 +40,12 @@ export default function Timeline() {
     <section
       id="process"
       ref={sectionRef}
-      className="relative py-28 md:py-36 px-6 md:px-12 bg-[#F5F3EE] border-t border-[#111111]/10 z-10"
+      className="relative py-16 sm:py-24 md:py-36 px-3 sm:px-6 lg:px-8 xl:px-12 bg-[#F5F3EE] border-t border-[#111111]/10 z-10 w-full overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto w-full">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 md:mb-20 gap-4">
-          <div className="w-full md:max-w-2xl lg:max-w-3xl">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-16 md:mb-20 gap-4">
+          <div className="w-full md:max-w-xl lg:max-w-2xl xl:max-w-3xl">
             {/* Pill-Style Section Eyebrow Badge */}
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#2457FF]/10 border border-[#2457FF]/30 text-[#2457FF] text-xs font-display font-bold mb-3 uppercase tracking-wider">
               <Sparkles className="w-3.5 h-3.5" />
@@ -55,29 +55,30 @@ export default function Timeline() {
             <MagneticHeading
               text="FROM IDEA → INTERNET"
               as="h2"
-              className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight text-[#111111] md:flex-nowrap whitespace-nowrap leading-none"
+              noWrap={true}
+              className="font-display text-[clamp(1.5rem,3.4vw,3.2rem)] md:text-[clamp(1.8rem,3vw,3.6rem)] xl:text-5xl font-extrabold tracking-tight text-[#111111] leading-tight sm:leading-none sm:whitespace-nowrap justify-start"
             />
-            <p className="font-serif italic text-lg sm:text-xl text-[#2457FF] mt-2">
+            <p className="font-serif italic text-base sm:text-lg lg:text-xl text-[#2457FF] mt-2">
               from the first concept to the final interaction
             </p>
           </div>
-          <p className="text-xs sm:text-sm text-[#6F6F6A] font-display max-w-md font-semibold leading-relaxed">
+          <p className="text-xs sm:text-sm text-[#6F6F6A] font-display max-w-xs md:max-w-sm lg:max-w-md font-semibold leading-relaxed shrink-0">
             Our 6-phase engineering pipeline designed to transform raw ambition into award-winning web products.
           </p>
         </div>
 
-        {/* Timeline Grid Layout */}
-        <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-          {/* Vertical Progress Line (Desktop) */}
-          <div className="hidden lg:block absolute left-12 top-0 bottom-0 w-[2px] bg-[#111111]/10 origin-top">
+        {/* Process Timeline Grid: Side-by-side columns on md+ (including 1024px) */}
+        <div className="relative grid grid-cols-1 md:grid-cols-[260px_minmax(0,1fr)] lg:grid-cols-[280px_minmax(0,1fr)] xl:grid-cols-[330px_minmax(0,1fr)] gap-6 sm:gap-8 lg:gap-10 xl:gap-12 items-start w-full">
+          {/* Vertical Progress Line (md+) */}
+          <div className="hidden md:block absolute left-3.5 lg:left-4 xl:left-6 top-0 bottom-0 w-[2px] bg-[#111111]/10 origin-top">
             <div
               ref={progressLineRef}
               className="w-full h-full bg-[#2457FF] origin-top scale-y-0"
             />
           </div>
 
-          {/* Left Column: Stage Selectors */}
-          <div className="lg:col-span-4 flex flex-col gap-4 lg:pl-16">
+          {/* Left Column: Stage Selectors (Timeline) */}
+          <div className="flex flex-col gap-2.5 sm:gap-3 lg:gap-3.5 md:pl-7 lg:pl-8 xl:pl-10 w-full">
             {timelineStages.map((stage, idx) => {
               const isActive = activeStage === idx;
               return (
@@ -86,22 +87,22 @@ export default function Timeline() {
                   onClick={() => setActiveStage(idx)}
                   onMouseEnter={() => setCursor('link')}
                   onMouseLeave={resetCursor}
-                  className={`text-left p-5 rounded-2xl transition-all duration-300 light-card flex items-center justify-between group ${
+                  className={`text-left p-3.5 sm:p-4 rounded-2xl transition-all duration-300 light-card flex items-center justify-between group ${
                     isActive
-                      ? 'border-[#2457FF] bg-white shadow-md translate-x-2'
-                      : 'border-[#111111]/10 hover:border-[#111111]/30'
+                      ? 'border-[#2457FF] bg-white shadow-md translate-x-1.5'
+                      : 'border-[#111111]/10 hover:border-[#111111]/30 bg-white/60'
                   }`}
                 >
-                  <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-2.5 sm:gap-3.5">
                     <span
-                      className={`font-display text-sm font-bold ${
+                      className={`font-display text-xs sm:text-sm font-bold ${
                         isActive ? 'text-[#2457FF]' : 'text-[#111111]/40'
                       }`}
                     >
                       {stage.step}
                     </span>
                     <span
-                      className={`font-display text-lg font-bold transition-colors ${
+                      className={`font-display text-sm sm:text-base font-bold transition-colors ${
                         isActive ? 'text-[#111111]' : 'text-[#111111]/60 group-hover:text-[#111111]'
                       }`}
                     >
@@ -109,7 +110,7 @@ export default function Timeline() {
                     </span>
                   </div>
                   <ArrowRight
-                    className={`w-4 h-4 transition-transform duration-300 ${
+                    className={`w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform duration-300 ${
                       isActive ? 'text-[#2457FF] translate-x-1' : 'text-[#111111]/30 group-hover:translate-x-1'
                     }`}
                   />
@@ -119,48 +120,48 @@ export default function Timeline() {
           </div>
 
           {/* Right Column: Stage Detail Presentation Card */}
-          <div className="lg:col-span-8 sticky top-28">
+          <div className="sticky top-24 lg:top-28 w-full">
             {timelineStages.map((stage, idx) => {
               if (idx !== activeStage) return null;
 
               return (
                 <div
                   key={stage.step}
-                  className="rounded-3xl p-8 md:p-12 light-card border border-[#2457FF]/30 shadow-xl animate-fadeIn relative overflow-hidden bg-white"
+                  className="rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-8 xl:p-12 light-card border border-[#2457FF]/30 shadow-xl animate-fadeIn relative overflow-hidden bg-white w-full"
                 >
                   {/* Stage Number & Title */}
-                  <div className="flex items-center justify-between mb-8">
-                    <div className="flex items-center gap-3">
-                      <span className="px-4 py-1.5 rounded-full font-display text-xs font-bold text-white bg-[#2457FF]">
+                  <div className="flex items-center justify-between mb-4 sm:mb-6 lg:mb-8">
+                    <div className="flex items-center gap-2.5 sm:gap-3">
+                      <span className="px-3.5 sm:px-4 py-1 sm:py-1.5 rounded-full font-display text-xs font-bold text-white bg-[#2457FF]">
                         PHASE {stage.step}
                       </span>
-                      <span className="text-xs font-serif italic text-[#6F6F6A] text-sm">
+                      <span className="text-xs font-serif italic text-[#6F6F6A]">
                         {stage.subtitle}
                       </span>
                     </div>
-                    <Sparkles className="w-5 h-5 text-[#2457FF]" />
+                    <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-[#2457FF]" />
                   </div>
 
-                  <h3 className="font-display text-3xl md:text-5xl font-extrabold text-[#111111] mb-6">
+                  <h3 className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-4xl xl:text-5xl font-extrabold text-[#111111] mb-3 sm:mb-4 lg:mb-6">
                     {stage.title}
                   </h3>
 
-                  <p className="text-base md:text-lg text-[#111111]/80 font-sans leading-relaxed mb-10">
+                  <p className="text-sm sm:text-base lg:text-lg text-[#111111]/80 font-sans leading-relaxed mb-6 sm:mb-8 lg:mb-10">
                     {stage.description}
                   </p>
 
                   {/* Deliverables Breakdown */}
-                  <div className="border-t border-[#111111]/10 pt-8">
-                    <div className="flex items-center gap-2 text-xs font-display text-[#2457FF] uppercase tracking-wider mb-4 font-bold">
+                  <div className="border-t border-[#111111]/10 pt-6 sm:pt-8">
+                    <div className="flex items-center gap-2 text-xs font-display text-[#2457FF] uppercase tracking-wider mb-3 sm:mb-4 font-bold">
                       <Layers className="w-4 h-4" />
                       <span>Key Deliverables</span>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                       {stage.deliverables.map((item) => (
                         <div
                           key={item}
-                          className="flex items-center gap-3 p-3.5 rounded-xl bg-[#F5F3EE] border border-[#111111]/10 text-sm font-sans text-[#111111] font-medium"
+                          className="flex items-center gap-2.5 sm:gap-3 p-3 sm:p-3.5 rounded-xl bg-[#F5F3EE] border border-[#111111]/10 text-xs sm:text-sm font-sans text-[#111111] font-medium"
                         >
                           <CheckCircle2 className="w-4 h-4 shrink-0 text-[#2457FF]" />
                           <span>{item}</span>

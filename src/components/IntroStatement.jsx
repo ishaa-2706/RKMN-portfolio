@@ -45,7 +45,7 @@ export default function IntroStatement() {
     <section
       id="intro"
       ref={containerRef}
-      className="relative py-28 md:py-40 px-6 md:px-12 bg-[#F5F3EE] flex items-center justify-center border-t border-b border-[#111111]/10 z-10"
+      className="relative py-16 sm:py-24 md:py-36 px-3 sm:px-6 lg:px-8 xl:px-12 bg-[#F5F3EE] flex items-center justify-center border-t border-b border-[#111111]/10 z-10 w-full overflow-hidden"
     >
       <div className="max-w-5xl mx-auto text-center">
         {/* Pill-Style Section Eyebrow Badge */}
@@ -54,11 +54,11 @@ export default function IntroStatement() {
           <span>STUDIO PHILOSOPHY</span>
         </div>
 
-        <p className="font-serif italic text-xl md:text-2xl text-[#2457FF] mb-6 font-normal">
+        <p className="font-serif italic text-base sm:text-xl md:text-2xl text-[#2457FF] mb-4 sm:mb-6 font-normal">
           crafting lasting digital impressions
         </p>
 
-        <h2 className="font-display text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-tight text-[#111111] flex flex-wrap justify-center gap-x-3 gap-y-2">
+        <h2 className="font-display text-2xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-tight text-[#111111] flex flex-wrap justify-center gap-x-2 sm:gap-x-3 gap-y-1.5 sm:gap-y-2">
           {words.map((word, index) => {
             const isHighlight = word.includes("EXPERIENCES") || word.includes("REMEMBER.");
             return (

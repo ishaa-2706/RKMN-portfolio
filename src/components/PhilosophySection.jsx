@@ -42,7 +42,7 @@ export default function PhilosophySection() {
   }, []);
 
   return (
-    <section ref={containerRef} className="relative py-16 sm:py-24 md:py-36 px-4 sm:px-6 md:px-12 bg-[#F5F3EE] border-t border-[#111111]/10 z-10 overflow-hidden w-full">
+    <section ref={containerRef} className="relative py-16 sm:py-24 md:py-36 px-3 sm:px-6 lg:px-8 xl:px-12 bg-[#F5F3EE] border-t border-[#111111]/10 z-10 overflow-hidden w-full">
       <div className="max-w-7xl mx-auto w-full">
         {/* Section Header */}
         <div className="mb-12 sm:mb-16 md:mb-20 text-center">
@@ -57,7 +57,7 @@ export default function PhilosophySection() {
           <MagneticHeading
             text="WE BELIEVE GOOD WEBSITES SHOULD FEEL ALIVE."
             as="h2"
-            className="font-display text-[clamp(2.2rem,6.5vw,5rem)] font-extrabold tracking-tight text-[#111111] max-w-4xl mx-auto leading-tight"
+            className="font-display text-[clamp(1.5rem,3.8vw,3.8rem)] xl:text-[clamp(2.2rem,4.5vw,4.8rem)] font-extrabold tracking-tight text-[#111111] max-w-5xl mx-auto leading-[1.15] text-center justify-center"
           />
           <p className="font-serif italic text-[clamp(1.1rem,4vw,1.5rem)] text-[#2457FF] mt-2 font-normal">
             principles that guide every line of code & visual decision
@@ -70,7 +70,7 @@ export default function PhilosophySection() {
             <div
               key={pillar.title}
               ref={(el) => (itemsRef.current[idx] = el)}
-              className="p-6 sm:p-8 md:p-12 rounded-3xl light-card border border-[#111111]/10 relative overflow-hidden group hover:border-[#2457FF]/50 transition-all duration-500 bg-white shadow-xs"
+              className="p-4 sm:p-8 md:p-12 rounded-2xl sm:rounded-3xl light-card border border-[#111111]/10 relative overflow-hidden group hover:border-[#2457FF]/50 transition-all duration-500 bg-white shadow-xs"
             >
               {/* Pillar Number */}
               <div className="flex items-center justify-between mb-6 sm:mb-8">

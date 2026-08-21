@@ -39,7 +39,7 @@ export default function FeaturedProject() {
   return (
     <section
       ref={containerRef}
-      className="relative py-16 sm:py-24 md:py-36 px-4 sm:px-6 md:px-12 bg-[#F5F3EE] border-t border-[#111111]/10 z-10 w-full overflow-hidden"
+      className="relative py-16 sm:py-24 md:py-36 px-3 sm:px-6 lg:px-8 xl:px-12 bg-[#F5F3EE] border-t border-[#111111]/10 z-10 w-full overflow-hidden"
     >
       <div className="max-w-7xl mx-auto w-full">
         {/* Section Header */}
@@ -50,12 +50,12 @@ export default function FeaturedProject() {
           </div>
 
           {/* Main Heading in Clash Display Bold with clamp typography */}
-          <h2 className="font-display text-[clamp(2.2rem,8.5vw,5.5rem)] font-extrabold text-[#111111] tracking-tight leading-tight">
+          <h2 className="font-display text-[clamp(2.1rem,6vw,4.8rem)] font-extrabold text-[#111111] tracking-tight leading-tight">
             INDIA BUSINESS HELPLINE
           </h2>
 
           {/* Tagline in Playfair Display Italic */}
-          <p className="font-serif italic text-[clamp(1.1rem,4.5vw,1.8rem)] text-[#2457FF] mt-2 font-normal leading-snug max-w-3xl mx-auto">
+          <p className="font-serif italic text-[clamp(1rem,3vw,1.6rem)] text-[#2457FF] mt-2 font-normal leading-snug max-w-3xl mx-auto">
             The complete business support ecosystem for entrepreneurs, startups & MSMEs.
           </p>
         </div>

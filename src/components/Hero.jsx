@@ -52,10 +52,10 @@ export default function Hero() {
   return (
     <section
       ref={heroRef}
-      className="relative min-h-screen flex flex-col justify-between items-center px-4 sm:px-6 md:px-8 lg:px-12 pt-28 pb-10 z-10 w-full box-border overflow-hidden"
+      className="relative min-h-[100svh] min-h-[100dvh] flex flex-col justify-between items-center px-3 sm:px-6 md:px-8 lg:px-12 pt-20 sm:pt-24 md:pt-28 pb-4 sm:pb-6 md:pb-8 z-10 w-full max-w-full box-border overflow-hidden"
     >
       {/* Background Hero Video Animation */}
-      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden w-full h-full">
         {shouldPlayVideo && (
           <video
             ref={videoRef}
@@ -71,69 +71,71 @@ export default function Hero() {
         <div className="absolute inset-0 bg-[#F5F3EE]/60 backdrop-blur-[1px] mix-blend-normal" />
       </div>
 
-      {/* Floating Editorial Badges */}
+      {/* Floating Editorial Badges (Desktop/XL Only to prevent 1024px collision) */}
       <div className="relative z-10 w-full max-w-7xl mx-auto flex items-center justify-between pointer-events-none">
-        <div className="absolute top-8 left-0 hidden lg:flex items-center gap-2 px-4 py-2 rounded-full light-card text-xs font-mono text-[#111111]/80 animate-float border border-[#111111]/10 backdrop-blur-md shadow-xs pointer-events-auto">
+        <div className="absolute top-4 left-0 hidden xl:flex items-center gap-2 px-4 py-2 rounded-full light-card text-xs font-mono text-[#111111]/80 animate-float border border-[#111111]/10 backdrop-blur-md shadow-xs pointer-events-auto">
           <Code2 className="w-4 h-4 text-[#2457FF]" />
           <span>Design Technologists</span>
         </div>
 
-        <div className="absolute top-16 right-0 hidden lg:flex items-center gap-2 px-4 py-2 rounded-full light-card text-xs font-mono text-[#111111]/80 animate-float border border-[#111111]/10 backdrop-blur-md shadow-xs pointer-events-auto" style={{ animationDelay: '2s' }}>
+        <div className="absolute top-10 right-0 hidden xl:flex items-center gap-2 px-4 py-2 rounded-full light-card text-xs font-mono text-[#111111]/80 animate-float border border-[#111111]/10 backdrop-blur-md shadow-xs pointer-events-auto" style={{ animationDelay: '2s' }}>
           <Zap className="w-4 h-4 text-[#E06D53]" />
           <span>60 FPS Motion Physics</span>
         </div>
       </div>
 
       {/* Center Studio Hero Content */}
-      <div className="relative z-10 my-auto flex flex-col items-center text-center max-w-7xl w-full mx-auto px-2 sm:px-4 box-border">
+      <div className="relative z-10 my-auto flex flex-col items-center text-center max-w-6xl w-full mx-auto px-1 sm:px-4 box-border">
         {/* Studio Tagline Badge */}
         <div
           ref={tagRef}
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#111111]/5 border border-[#111111]/10 text-xs md:text-sm font-mono tracking-wider text-[#2457FF] font-semibold uppercase mb-6 md:mb-8 backdrop-blur-md shadow-xs"
+          className="inline-flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-[#111111]/5 border border-[#111111]/10 text-[10px] sm:text-xs md:text-sm font-mono tracking-wider text-[#2457FF] font-semibold uppercase mb-2.5 sm:mb-4 md:mb-6 backdrop-blur-md shadow-xs max-w-full text-center"
         >
-          <Sparkles className="w-3.5 h-3.5" />
-          <span>Two minds. One digital canvas.</span>
+          <Sparkles className="w-3.5 h-3.5 shrink-0" />
+          <span className="truncate">Two minds. One digital canvas.</span>
         </div>
 
         {/* Oversized Clash Display Duo Title */}
         <div
           onMouseEnter={() => setCursor('magnet')}
           onMouseLeave={resetCursor}
-          className="my-2 md:my-4 w-full text-center"
+          className="my-1 sm:my-2 w-full max-w-full text-center flex justify-center items-center"
         >
           <MagneticHeading
             text="ROUNAK × MANISHA"
             as="h1"
             accentChar="×"
             accentColor="#2457FF"
-            className="font-display font-extrabold text-[#111111] text-4xl sm:text-5xl md:text-6xl lg:text-[clamp(2.2rem,4.5vw,5.2rem)] xl:text-[clamp(2.6rem,4.8vw,5.8rem)] 2xl:text-[clamp(3rem,5vw,6.4rem)] tracking-tight leading-none drop-shadow-xs"
+            noWrap={true}
+            className="font-display font-extrabold text-[#111111] text-[clamp(1.65rem,7.5vw,3.6rem)] sm:text-5xl md:text-5xl lg:text-[clamp(2.4rem,4.2vw,4.8rem)] xl:text-[clamp(2.6rem,4.8vw,5.8rem)] 2xl:text-[clamp(3rem,5vw,6.4rem)] tracking-tight leading-[1.05] sm:leading-none drop-shadow-xs max-w-full text-center justify-center sm:whitespace-nowrap"
             strength={0.4}
             radius={180}
           />
         </div>
 
-        {/* Main Supporting Headline & Playfair Display Italic Accent */}
-        <h2 className="mt-6 text-xl sm:text-2xl md:text-3xl font-display font-bold tracking-tight text-[#111111] max-w-3xl">
+        {/* Main Supporting Headline */}
+        <h2 className="mt-2.5 sm:mt-4 md:mt-5 text-sm sm:text-xl md:text-2xl lg:text-3xl font-display font-bold tracking-tight text-[#111111] max-w-3xl leading-tight sm:leading-snug text-center px-1">
           WE BUILD DIGITAL EXPERIENCES.
         </h2>
 
         {/* Playfair Display Editorial Accent Subtitle */}
-        <p className="mt-2 text-base sm:text-lg md:text-xl font-serif italic text-[#2457FF] font-normal tracking-wide">
+        <p className="mt-1 sm:mt-2 text-[11px] sm:text-base md:text-lg lg:text-xl font-serif italic text-[#2457FF] font-normal tracking-normal sm:tracking-wide max-w-xl text-center px-1">
           where design intuition meets engineering precision
         </p>
 
-        <p className="mt-4 text-sm sm:text-base text-[#6F6F6A] max-w-xl font-sans font-normal leading-relaxed">
+        {/* Studio Description */}
+        <p className="mt-2 sm:mt-3 md:mt-4 text-[11px] sm:text-sm md:text-base text-[#6F6F6A] max-w-xl w-full font-sans font-normal leading-relaxed text-center px-1 sm:px-0">
           Crafting modern websites, digital design systems, and spatial brand experiences at the intersection of aesthetic direction and production engineering.
         </p>
 
-        {/* Action CTAs */}
-        <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+        {/* Action CTAs: Stacked vertically on mobile (<640px), row on tablet/desktop */}
+        <div className="mt-4 sm:mt-6 md:mt-8 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-2.5 sm:gap-4 w-full sm:w-auto max-w-xs sm:max-w-none mx-auto">
           <a
             href="#work"
             onClick={(e) => handleScrollTo(e, '#work')}
             onMouseEnter={() => setCursor('link')}
             onMouseLeave={resetCursor}
-            className="px-8 py-3.5 rounded-full bg-[#111111] text-white font-display font-bold text-xs tracking-wider uppercase transition-all duration-300 hover:bg-[#2457FF] hover:scale-105 shadow-md hover:shadow-lg"
+            className="w-full sm:w-auto px-5 sm:px-8 py-2.5 sm:py-3.5 rounded-full bg-[#111111] text-white font-display font-bold text-xs tracking-wider uppercase transition-all duration-300 hover:bg-[#2457FF] hover:scale-105 shadow-md hover:shadow-lg text-center flex items-center justify-center"
           >
             Explore Selected Works
           </a>
@@ -143,7 +145,7 @@ export default function Hero() {
             onClick={(e) => handleScrollTo(e, '#about')}
             onMouseEnter={() => setCursor('link')}
             onMouseLeave={resetCursor}
-            className="px-8 py-3.5 rounded-full light-card text-[#111111] font-display text-xs tracking-wider uppercase transition-all duration-300 hover:border-[#111111]/30 font-bold bg-white/90 backdrop-blur-md"
+            className="w-full sm:w-auto px-5 sm:px-8 py-2.5 sm:py-3.5 rounded-full light-card text-[#111111] font-display text-xs tracking-wider uppercase transition-all duration-300 hover:border-[#111111]/30 font-bold bg-white/90 backdrop-blur-md text-center flex items-center justify-center"
           >
             Meet The Duo
           </a>
@@ -156,10 +158,10 @@ export default function Hero() {
         onClick={(e) => handleScrollTo(e, '#intro')}
         onMouseEnter={() => setCursor('link')}
         onMouseLeave={resetCursor}
-        className="relative z-10 group flex flex-col items-center gap-2 text-[#111111]/60 hover:text-[#2457FF] transition-colors font-mono text-[10px] tracking-widest uppercase cursor-pointer"
+        className="mt-4 sm:mt-6 lg:mt-2 relative z-10 group flex flex-col items-center gap-1 sm:gap-1.5 text-[#111111]/60 hover:text-[#2457FF] transition-colors font-mono text-[10px] tracking-widest uppercase cursor-pointer select-none"
       >
         <span>SCROLL TO EXPLORE</span>
-        <ArrowDown className="w-4 h-4 transition-transform duration-300 group-hover:translate-y-1 text-[#2457FF]" />
+        <ArrowDown className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-y-1 text-[#2457FF]" />
       </a>
     </section>
   );

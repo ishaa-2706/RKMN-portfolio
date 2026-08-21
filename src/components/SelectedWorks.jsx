@@ -24,33 +24,35 @@ export default function SelectedWorks() {
     : projectsData.filter((p) => p.category === selectedCategory);
 
   return (
-    <section id="work" className="relative py-16 sm:py-24 md:py-36 px-4 sm:px-6 md:px-12 bg-[#F5F3EE] border-t border-[#111111]/10 z-10 w-full overflow-hidden">
+    <section id="work" className="relative py-16 sm:py-24 md:py-36 px-3 sm:px-6 lg:px-8 xl:px-12 bg-[#F5F3EE] border-t border-[#111111]/10 z-10 w-full overflow-hidden">
       <div className="max-w-7xl mx-auto w-full">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 md:mb-16 gap-4">
-          <div className="w-full md:max-w-3xl">
+        <div className="mb-10 md:mb-16">
+          <div className="max-w-3xl">
             {/* Pill-Style Section Eyebrow Badge */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#2457FF]/10 border border-[#2457FF]/30 text-[#2457FF] text-xs font-display font-bold mb-3 uppercase tracking-wider">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>PORTFOLIO SHOWCASE</span>
+            <div className="mb-3 sm:mb-4 block">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#2457FF]/10 border border-[#2457FF]/30 text-[#2457FF] text-xs font-display font-bold uppercase tracking-wider">
+                <Sparkles className="w-3.5 h-3.5" />
+                <span>PORTFOLIO SHOWCASE</span>
+              </div>
             </div>
-            
-            {/* Single Horizontal Heading Row on Desktop/Laptop */}
-            <div className="flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-4 flex-wrap">
+
+            {/* Vertically Stacked Heading Block */}
+            <div className="flex flex-col items-start gap-2 sm:gap-2.5">
               <MagneticHeading
                 text="SELECTED WORKS"
                 as="h2"
-                className="font-display text-[clamp(2.2rem,6vw,5.2rem)] font-extrabold tracking-tight text-[#111111] leading-none whitespace-nowrap -ml-1 sm:ml-0"
+                noWrap={true}
+                className="font-display text-[clamp(2.1rem,5vw,4.8rem)] xl:text-[clamp(2.5rem,6vw,5.5rem)] font-extrabold tracking-tight text-[#111111] leading-none sm:whitespace-nowrap justify-start -ml-1 sm:ml-0"
               />
-              <span className="font-serif italic text-lg sm:text-xl md:text-2xl text-[#2457FF] whitespace-nowrap">
+              <p className="font-serif italic text-base sm:text-xl md:text-2xl text-[#2457FF] font-normal">
                 from idea → internet
-              </span>
+              </p>
+              <p className="text-xs sm:text-sm md:text-base text-[#6F6F6A] font-display font-semibold leading-relaxed max-w-2xl mt-1">
+                Every project commands equal visual importance in a full-width case-study showcase.
+              </p>
             </div>
           </div>
-
-          <p className="text-xs sm:text-sm text-[#6F6F6A] font-display max-w-md font-semibold leading-relaxed">
-            Every project commands equal visual importance in a full-width case-study showcase.
-          </p>
         </div>
 
         {/* Category Filter Bar — Horizontally Scrollable on Mobile without Overflowing Page */}

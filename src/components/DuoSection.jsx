@@ -19,11 +19,11 @@ export default function DuoSection() {
   };
 
   return (
-    <section id="about" className="relative py-16 sm:py-24 md:py-36 px-4 sm:px-6 md:px-12 bg-[#F5F3EE] z-10 w-full overflow-hidden">
+    <section id="about" className="relative py-16 sm:py-24 md:py-36 px-3 sm:px-6 lg:px-8 xl:px-12 bg-[#F5F3EE] z-10 w-full overflow-hidden">
       <div className="max-w-7xl mx-auto w-full">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-16 pb-8 border-b border-[#111111]/10 gap-4">
-          <div className="w-full md:max-w-2xl">
+          <div className="w-full md:max-w-xl lg:max-w-2xl">
             {/* Pill-Style Section Eyebrow Badge — Placed strictly on its own line above heading */}
             <div className="mb-3 block">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#2457FF]/10 border border-[#2457FF]/30 text-[#2457FF] text-xs font-display font-bold uppercase tracking-wider">
@@ -35,21 +35,22 @@ export default function DuoSection() {
             <MagneticHeading
               text="THE DUO"
               as="h2"
-              className="font-display text-[clamp(2.5rem,8vw,5.5rem)] font-extrabold tracking-tight text-[#111111] leading-none"
+              noWrap={true}
+              className="font-display text-[clamp(1.85rem,4.8vw,4.5rem)] xl:text-[clamp(2.5rem,5.5vw,5.5rem)] font-extrabold tracking-tight text-[#111111] leading-none sm:whitespace-nowrap justify-start"
             />
             <p className="font-serif italic text-[clamp(1.1rem,4vw,1.5rem)] text-[#2457FF] mt-2 font-normal">
               two minds, one cohesive digital vision
             </p>
           </div>
-          <p className="text-xs sm:text-sm text-[#6F6F6A] font-display max-w-md font-semibold leading-relaxed">
+          <p className="text-xs sm:text-sm text-[#6F6F6A] font-display max-w-xs md:max-w-sm lg:max-w-md font-semibold leading-relaxed shrink-0">
             Complementary mindsets operating in total sync. Engineering precision paired with aesthetic direction.
           </p>
         </div>
 
         {/* Duo Cards Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 relative w-full">
-          {/* Central Synergy Connector Icon */}
-          <div className="hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 w-16 h-16 rounded-full bg-[#FFFFFF] border border-[#2457FF]/40 items-center justify-center text-[#2457FF] font-display text-xl font-bold shadow-md pointer-events-none">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 relative w-full">
+          {/* Central Synergy Connector Icon (Desktop/XL Only) */}
+          <div className="hidden xl:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 w-16 h-16 rounded-full bg-[#FFFFFF] border border-[#2457FF]/40 items-center justify-center text-[#2457FF] font-display text-xl font-bold shadow-md pointer-events-none">
             ×
           </div>
 
